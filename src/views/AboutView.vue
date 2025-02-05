@@ -1,15 +1,12 @@
 <template>
   <div class="about">
     <h1>This is an about page</h1>
-    <h1 class="text-3xl font-bold underline">
-      Hello world!
-    </h1>
+    <h1 class="text-3xl font-bold underline">Hello world!</h1>
     <div>
-      count: {{counter.count}} doubleCOunt: {{counter.doubleCount}}
+      count: {{ counter.count }} doubleCOunt: {{ counter.doubleCount }}
       <el-button type="primary" @click="counter.increment()">Primary</el-button>
     </div>
   </div>
-
 </template>
 
 <style>
@@ -22,10 +19,20 @@
 }
 </style>
 <script setup lang="ts">
+import { useCounterStore } from '@/stores/counter.ts'
+import axios from '@/request/axios.ts'
 
-import {useCounterStore} from "@/stores/counter.ts";
+const counter = useCounterStore()
 
-const counter = useCounterStore();
+axios.get('/api/test').then((response) => {
+  console.log(response)
+})
 
-
+// axios.post('http://localhost/api/login', {
+//   email: "crazyhl@163.com",
+//   password: "123456789",
+//   device_name: 'api',
+// }).then(response => {
+//   console.log(response.data);
+// })
 </script>
