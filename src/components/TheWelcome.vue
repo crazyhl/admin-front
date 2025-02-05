@@ -12,6 +12,7 @@ const openReadmeInEditor = () => fetch('/__open-in-editor?file=README.md')
 
 <template>
   <Icon icon="mdi-light:home" />
+  <el-button type="primary">Primary</el-button>
   <WelcomeItem>
     <template #icon>
       <DocumentationIcon />
