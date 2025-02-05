@@ -4,6 +4,10 @@
     <h1 class="text-3xl font-bold underline">
       Hello world!
     </h1>
+    <div>
+      count: {{counter.count}} doubleCOunt: {{counter.doubleCount}}
+      <el-button type="primary" @click="counter.increment()">Primary</el-button>
+    </div>
   </div>
 
 </template>
@@ -18,4 +22,10 @@
 }
 </style>
 <script setup lang="ts">
+
+import {useCounterStore} from "@/stores/counter.ts";
+
+const counter = useCounterStore();
+
+
 </script>
