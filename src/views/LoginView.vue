@@ -34,15 +34,20 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
+import type { LoginForm } from '@/request/interface/loginForm.ts'
+import { login } from '@/request/auth.ts'
 
-const loginForm = ref({
-  username: '',
+const loginForm = ref<LoginForm>({
   email: '',
+  password: '',
+  device: navigator.userAgent,
 })
 
 const handleLogin = () => {
   // 处理登录逻辑
-  console.log('登录信息:', loginForm.value)
+  login(loginForm.value).then((response) => {
+    console.log(response)
+  })
 }
 </script>
 
