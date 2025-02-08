@@ -1,12 +1,14 @@
 import axios from 'axios'
 
-axios.defaults.withCredentials = true
-axios.defaults.withXSRFToken = true
+const instance = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL,
+})
 
-axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL
+instance.defaults.withCredentials = true
+instance.defaults.withXSRFToken = true
 
 // 详情拦截器封装只返回需要的数据
-axios.interceptors.response.use(
+instance.interceptors.response.use(
   (res) => {
     if (res.data.code != 0) {
       return Promise.reject(res.data.message)
@@ -18,4 +20,4 @@ axios.interceptors.response.use(
   },
 )
 
-export default axios
+export default instance
