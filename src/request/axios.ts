@@ -7,7 +7,7 @@ const instance = axios.create({
 instance.defaults.withCredentials = true
 instance.defaults.withXSRFToken = true
 
-// 详情拦截器封装只返回需要的数据
+// 全局响应拦截器封装只返回需要的数据
 instance.interceptors.response.use(
   (res) => {
     if (res.data.code != 0) {
