@@ -38,16 +38,14 @@ import type { LoginForm } from '@/request/interface/loginForm.ts'
 import { login } from '@/request/auth.ts'
 
 const loginForm = ref<LoginForm>({
-  email: '',
-  password: '',
+  email: 'crazyhl@163.com',
+  password: '123456789',
   device: navigator.userAgent,
 })
 
 const handleLogin = () => {
   // 处理登录逻辑
-  login(loginForm.value).then((response) => {
-    console.log(response)
-  })
+  login(loginForm.value).then((response) => {})
 }
 </script>
 

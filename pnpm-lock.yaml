@@ -90,6 +90,9 @@ importers:
       unplugin-auto-import:
         specifier: ^19.0.0
         version: 19.0.0(@vueuse/core@9.13.0(vue@3.5.13(typescript@5.7.3)))(rollup@4.34.2)
+      unplugin-element-plus:
+        specifier: ^0.9.1
+        version: 0.9.1
       unplugin-vue-components:
         specifier: ^28.0.0
         version: 28.0.0(@babel/parser@7.26.7)(rollup@4.34.2)(vue@3.5.13(typescript@5.7.3))
@@ -2264,6 +2267,14 @@ packages:
         optional: true
       '@vueuse/core':
         optional: true
+
+  unplugin-element-plus@0.9.1:
+    resolution: {integrity: sha512-TtQ7bj82gM1Hw5A+LmG/oFrvYb6L0BqhxVUl7djMiicvk7LjdUiP70QhTKaBY/tiFR9NJCIPYSmw4naCuhK7Hg==}
+    engines: {node: '>=18.12.0'}
+
+  unplugin-utils@0.2.3:
+    resolution: {integrity: sha512-unB2e2ogZwEoMw/X0Gq1vj2jaRKLmTh9wcSEJggESPllcrZI68uO7B8ykixbXqsSwG8r9T7qaHZudXIC/3qvhw==}
+    engines: {node: '>=18.12.0'}
 
   unplugin-vue-components@28.0.0:
     resolution: {integrity: sha512-vYe0wSyqTVhyNFIad1iiGyQGhG++tDOMgohqenMDOAooMJP9vvzCdXTqCVx20A0rCQXFNjgoRbSeDAioLPH36Q==}
@@ -4647,6 +4658,18 @@ snapshots:
       '@vueuse/core': 9.13.0(vue@3.5.13(typescript@5.7.3))
     transitivePeerDependencies:
       - rollup
+
+  unplugin-element-plus@0.9.1:
+    dependencies:
+      es-module-lexer: 1.6.0
+      magic-string: 0.30.17
+      unplugin: 2.1.2
+      unplugin-utils: 0.2.3
+
+  unplugin-utils@0.2.3:
+    dependencies:
+      pathe: 2.0.2
+      picomatch: 4.0.2
 
   unplugin-vue-components@28.0.0(@babel/parser@7.26.7)(rollup@4.34.2)(vue@3.5.13(typescript@5.7.3)):
     dependencies:
