@@ -52,20 +52,23 @@ import { login } from '@/request/auth.ts'
 import { useRoute, useRouter } from 'vue-router'
 import { captcha } from '@/request/captcha.ts'
 
+// 初始化登录表单数据，默认邮箱和密码用于测试环境
 const loginForm = ref<LoginForm>({
-  email: 'crazyhl@163.com',
-  password: '123456789',
-  device: navigator.userAgent,
-  captcha: '',
+  email: 'crazyhl@163.com', // 邮箱
+  password: '123456789', // 密码
+  device: navigator.userAgent, // 浏览器 ua 用户记录部分用户信息，这个是 laravel 用的
+  captcha: '', // 验证码
 })
 const captchaUrl = ref<string>('')
 
 refreshCaptcha()
 
 function refreshCaptcha() {
-  captcha().then((res) => {
-    captchaUrl.value = res.data.src
-  })
+  captcha()
+    .then((res) => {
+      captchaUrl.value = res.data.src
+    })
+    .catch((err) => {})
 }
 
 const route = useRoute()
