@@ -29,9 +29,9 @@ const router = createRouter({
 })
 
 // 判定登录前置拦截器
-router.beforeEach((to, from) => {
+router.beforeEach((to) => {
   if (to.name !== 'login' && localStorage.getItem('token') === null) {
-    return { name: 'login', params: { redirect: to.fullPath } }
+    return { name: 'login', query: { redirect: to.fullPath } }
   }
 })
 

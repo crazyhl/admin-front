@@ -45,10 +45,15 @@ const loginForm = ref<LoginForm>({
 })
 const route = useRoute()
 const router = useRouter()
+console.log(route)
+console.log(route.query)
+console.log(route.query.redirect)
 const handleLogin = () => {
   // 处理登录逻辑
   login(loginForm.value).then(() => {
-    const redirectTo = typeof route.params.redirect === 'string' ? route.params.redirect : '/'
+    const redirectTo = typeof route.query.redirect === 'string' ? route.query.redirect : '/'
+    console.log(route.query.redirect)
+    console.log(redirectTo)
     router.push(redirectTo)
   })
 }
