@@ -47,7 +47,7 @@ const route = useRoute()
 const router = useRouter()
 const handleLogin = () => {
   // 处理登录逻辑
-  login(loginForm.value).then((response) => {
+  login(loginForm.value).then(() => {
     const redirectTo = typeof route.params.redirect === 'string' ? route.params.redirect : '/'
     router.push(redirectTo)
   })
