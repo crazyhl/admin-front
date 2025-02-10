@@ -25,7 +25,20 @@
             type="password"
           />
         </el-form-item>
-
+        <!-- 保持原有结构，在密码表单项后添加 -->
+        <el-form-item label="验证码" prop="captcha">
+          <div class="captcha-container">
+            <el-input
+              v-model="loginForm.captcha"
+              class="captcha-input"
+              placeholder="请输入验证码"
+            />
+            <div class="captcha-image" @click="refreshCaptcha">
+              <img v-if="captchaUrl" :src="captchaUrl" alt="验证码" />
+              <span v-else>loading captcha...</span>
+            </div>
+          </div>
+        </el-form-item>
         <el-button class="login-btn" type="primary" @click="handleLogin"> 立即登录</el-button>
       </el-form>
     </div>
@@ -37,23 +50,30 @@ import { ref } from 'vue'
 import type { LoginForm } from '@/request/interface/loginForm.ts'
 import { login } from '@/request/auth.ts'
 import { useRoute, useRouter } from 'vue-router'
+import { captcha } from '@/request/captcha.ts'
 
 const loginForm = ref<LoginForm>({
   email: 'crazyhl@163.com',
   password: '123456789',
   device: navigator.userAgent,
+  captcha: '',
 })
+const captchaUrl = ref<string>('')
+
+refreshCaptcha()
+
+function refreshCaptcha() {
+  captcha().then((res) => {
+    captchaUrl.value = res.data.src
+  })
+}
+
 const route = useRoute()
 const router = useRouter()
-console.log(route)
-console.log(route.query)
-console.log(route.query.redirect)
 const handleLogin = () => {
   // 处理登录逻辑
   login(loginForm.value).then(() => {
     const redirectTo = typeof route.query.redirect === 'string' ? route.query.redirect : '/'
-    console.log(route.query.redirect)
-    console.log(redirectTo)
     router.push(redirectTo)
   })
 }
@@ -113,6 +133,39 @@ const handleLogin = () => {
 .login-btn {
   width: 100%;
   margin-top: 20px;
+}
+
+/* 添加验证码样式 */
+.captcha-container {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.captcha-input {
+  flex: 1;
+}
+
+.captcha-image {
+  height: 40px;
+  width: 126px;
+  cursor: pointer;
+  border: 1px solid #dcdfe6;
+  border-radius: 4px;
+  padding: 2px;
+
+  img {
+    height: 100%;
+    vertical-align: middle;
+  }
+
+  &:hover {
+    border-color: #409eff;
+  }
+}
+
+.el-input {
+  height: 40px;
 }
 
 /* 响应式处理 */
