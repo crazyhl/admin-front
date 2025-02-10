@@ -20,7 +20,6 @@ instance.interceptors.response.use(
     if (error.status === 401) {
       // 返回 401 应该要进行跳转到登录
       const route = router.currentRoute.value // 直接获取当前路由
-      console.log(route.fullPath)
       return router.push({ name: 'login', query: { redirect: route.fullPath } })
     }
     return Promise.reject(error)
