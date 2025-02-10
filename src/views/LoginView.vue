@@ -36,16 +36,21 @@
 import { ref } from 'vue'
 import type { LoginForm } from '@/request/interface/loginForm.ts'
 import { login } from '@/request/auth.ts'
+import { useRoute, useRouter } from 'vue-router'
 
 const loginForm = ref<LoginForm>({
   email: 'crazyhl@163.com',
   password: '123456789',
   device: navigator.userAgent,
 })
-
+const route = useRoute()
+const router = useRouter()
 const handleLogin = () => {
   // 处理登录逻辑
-  login(loginForm.value).then((response) => {})
+  login(loginForm.value).then((response) => {
+    const redirectTo = typeof route.params.redirect === 'string' ? route.params.redirect : '/'
+    router.push(redirectTo)
+  })
 }
 </script>
 
