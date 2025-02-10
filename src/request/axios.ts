@@ -1,4 +1,5 @@
 import axios from 'axios'
+import router from '@/router'
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -16,6 +17,10 @@ instance.interceptors.response.use(
     return res.data
   },
   (error) => {
+    if (error.status === 401) {
+      // 返回 401 应该要进行跳转到登录
+      return router.push('/login')
+    }
     return Promise.reject(error)
   },
 )

@@ -24,7 +24,7 @@ import axios from '@/request/axios.ts'
 
 const counter = useCounterStore()
 
-axios.get('/api/test').then((response) => {
+axios.get('/test').then((response) => {
   console.log(response)
 })
 
