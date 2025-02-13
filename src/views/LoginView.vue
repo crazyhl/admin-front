@@ -58,6 +58,7 @@ const loginForm = ref<LoginForm>({
   password: '123456789', // 密码
   device: navigator.userAgent, // 浏览器 ua 用户记录部分用户信息，这个是 laravel 用的
   captcha: '', // 验证码
+  key: '',
 })
 const captchaUrl = ref<string>('')
 
@@ -66,7 +67,8 @@ refreshCaptcha()
 function refreshCaptcha() {
   captcha()
     .then((res) => {
-      captchaUrl.value = res.data.src
+      captchaUrl.value = res.data.img
+      loginForm.value.key = res.data.key
     })
     .catch((err) => {})
 }

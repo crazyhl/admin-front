@@ -3,4 +3,5 @@ export interface LoginForm {
   password: string
   device: string
   captcha: string
+  key: string
 }

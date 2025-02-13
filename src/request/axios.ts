@@ -8,6 +8,21 @@ const instance = axios.create({
 instance.defaults.withCredentials = true
 instance.defaults.withXSRFToken = true
 
+// 添加请求拦截器
+instance.interceptors.request.use(
+  function (config) {
+    console.log(localStorage.getItem('token'))
+    if (localStorage.getItem('token')) {
+      config.headers.Authorization = localStorage.getItem('token')
+    }
+    return config
+  },
+  function (error) {
+    // 对请求错误做些什么
+    return Promise.reject(error)
+  },
+)
+
 // 全局响应拦截器封装只返回需要的数据
 instance.interceptors.response.use(
   (res) => {
