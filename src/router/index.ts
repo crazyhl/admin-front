@@ -8,6 +8,9 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: '/about',
@@ -16,6 +19,9 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue'),
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: '/login',
@@ -25,12 +31,20 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/LoginView.vue'),
     },
+    {
+      path: '/register',
+      name: 'register',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/RegisterView.vue'),
+    },
   ],
 })
 
 // 判定登录前置拦截器
 router.beforeEach((to) => {
-  if (to.name !== 'login' && localStorage.getItem('token') === null) {
+  if (to.meta.requiresAuth === true && localStorage.getItem('token') === null) {
     return { name: 'login', query: { redirect: to.fullPath } }
   }
 })

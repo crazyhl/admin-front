@@ -25,7 +25,7 @@ import axios from '@/request/axios.ts'
 const counter = useCounterStore()
 
 axios.get('/test').then((response) => {
-  console.log(response)
+  console.log('response', response)
 })
 
 // axios.post('http://localhost/api/login', {
