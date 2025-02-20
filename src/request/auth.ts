@@ -19,7 +19,7 @@ export function login(form: LoginForm) {
         // 错误处理
         ElNotification({
           title: '登录错误',
-          message: err,
+          message: err.response.data.message,
           type: 'error',
         })
       })
@@ -40,7 +40,7 @@ export function register(form: RegisterForm) {
         // 错误处理
         ElNotification({
           title: '登录错误',
-          message: err,
+          message: err.response.data.message,
           type: 'error',
         })
       })
