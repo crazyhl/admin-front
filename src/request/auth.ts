@@ -41,7 +41,7 @@ export function register(form: RegisterForm) {
         // 错误处理
         ElNotification({
           title: '登录错误',
-          message: err.response.data.message,
+          message: err.message,
           type: 'error',
         })
       })
