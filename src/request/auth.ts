@@ -17,9 +17,10 @@ export function login(form: LoginForm) {
       })
       .catch((err) => {
         // 错误处理
+        console.log(err)
         ElNotification({
           title: '登录错误',
-          message: err.response.data.message,
+          message: err.message,
           type: 'error',
         })
       })

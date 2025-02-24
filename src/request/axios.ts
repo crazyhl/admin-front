@@ -27,7 +27,7 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (res) => {
     if (res.data.code != 0) {
-      return Promise.reject(res.data.message)
+      return Promise.reject(res.data)
     }
     return res.data
   },
@@ -37,7 +37,7 @@ instance.interceptors.response.use(
       const route = router.currentRoute.value // 直接获取当前路由
       return router.push({ name: 'login', query: { redirect: route.fullPath } })
     }
-    return Promise.reject(error)
+    return Promise.reject(error.response.data)
   },
 )
 
