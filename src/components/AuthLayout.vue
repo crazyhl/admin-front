@@ -48,6 +48,7 @@ onMounted(() => {
 .auth-container {
   display: flex;
   min-height: 100vh;
+  height: 100%; /* 添加这行 */
 }
 
 .left-panel {
@@ -58,17 +59,29 @@ onMounted(() => {
   background-color: #f5f7fa;
   padding: 2rem;
   background-image: linear-gradient(135deg, #f5f7fa 0%, #e4e7eb 100%);
+  position: sticky; /* 添加这行 */
+  top: 0;         /* 添加这行 */
+  height: 100vh;  /* 添加这行 */
 }
 
 .right-panel {
   flex: 1;
   display: flex;
-  align-items: center;
+  align-items: flex-start; /* 修改这行，从 center 改为 flex-start */
   justify-content: center;
   background-color: white;
   padding: 2rem;
+  min-height: 100vh; /* 添加这行 */
 }
 
+/* 响应式设计中修改 */
+@media (max-width: 768px) {
+  .left-panel {
+    position: relative; /* 添加这行 */
+    height: auto;      /* 添加这行 */
+    min-height: 25vh;
+  }
+}
 .logo-container {
   max-width: 400px;
   text-align: center;
