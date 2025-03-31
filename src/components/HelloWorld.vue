@@ -10,6 +10,9 @@ defineProps({
 <template>
   <div class="greetings">
     <h1 class="green">{{ msg }}</h1>
+    <el-button>Default</el-button>
+    <el-button type="primary">Primary</el-button>
+    <p class="font-bold">The quick brown fox ...</p>
     <h3>
       You’ve successfully created a project with
       <a href="https://vite.dev/" target="_blank" rel="noopener">Vite</a> +
