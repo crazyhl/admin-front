@@ -67,14 +67,21 @@ onMounted(() => {
 .right-panel {
   flex: 1;
   display: flex;
-  align-items: flex-start; /* 修改这行，从 center 改为 flex-start */
+  align-items: center;  /* 改回 center */
   justify-content: center;
   background-color: white;
   padding: 2rem;
-  min-height: 100vh; /* 添加这行 */
+  min-height: 100vh;
 }
 
-/* 响应式设计中修改 */
+/* 添加表单容器样式 */
+:slotted(.auth-form) {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* 响应式设计中添加 */
 @media (max-width: 768px) {
   .left-panel {
     position: relative; /* 添加这行 */
@@ -121,15 +128,21 @@ onMounted(() => {
 @media (max-width: 768px) {
   .auth-container {
     flex-direction: column;
+    height: auto;
+    min-height: auto;
   }
 
   .left-panel {
-    padding: 1.5rem 1rem;
+    position: relative;
+    height: auto;
     min-height: 25vh;
+    padding: 1.5rem 1rem;
   }
 
   .right-panel {
     padding: 1rem;
+    min-height: auto;  /* 移除最小高度限制 */
+    height: auto;      /* 添加自适应高度 */
   }
 
   .logo {
