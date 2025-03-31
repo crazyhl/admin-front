@@ -14,7 +14,15 @@
             type="password"
           />
         </el-form-item>
-        <el-button class="submit-btn" type="primary" @click="handleLogin"> 登录 </el-button>
+
+        <el-form-item label="验证码" prop="captcha">
+          <div class="captcha-container">
+            <el-input v-model="loginForm.captcha" placeholder="请输入验证码" />
+            <img :src="captchaUrl" alt="验证码" class="captcha-img" @click="refreshCaptcha" />
+          </div>
+        </el-form-item>
+
+        <el-button class="submit-btn" type="primary" @click="handleLogin">登录</el-button>
       </el-form>
       <div class="form-footer">
         <span>还没有账号？</span>
@@ -25,21 +33,55 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import AuthLayout from '@/components/AuthLayout.vue'
+import axios from 'axios'
 
 const router = useRouter()
 const loginFormRef = ref()
 const loginForm = ref({
   username: '',
   password: '',
+  captcha: '', // 新增验证码字段
 })
 
 const rules = {
   username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
   password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+  captcha: [{ required: true, message: '请输入验证码', trigger: 'blur' }], // 新增验证码验证规则
 }
+
+const captchaUrl = ref('')
+
+// 获取验证码
+const getCaptcha = async () => {
+  try {
+    const response = await axios.get('/api/captcha', {
+      responseType: 'blob',
+    })
+    captchaUrl.value = URL.createObjectURL(response.data)
+  } catch (error) {
+    console.error('获取验证码失败:', error)
+  }
+}
+
+// 刷新验证码
+const refreshCaptcha = () => {
+  getCaptcha()
+}
+
+// 组件挂载时获取验证码
+onMounted(() => {
+  getCaptcha()
+})
+
+// 组件卸载时清理 URL 对象
+onUnmounted(() => {
+  if (captchaUrl.value) {
+    URL.revokeObjectURL(captchaUrl.value)
+  }
+})
 
 const handleLogin = () => {
   loginFormRef.value?.validate((valid) => {
@@ -81,5 +123,16 @@ h2 {
 .form-footer a {
   color: var(--el-color-primary);
   margin-left: 0.5rem;
+}
+
+.captcha-container {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.captcha-img {
+  height: 32px;
+  cursor: pointer;
 }
 </style>

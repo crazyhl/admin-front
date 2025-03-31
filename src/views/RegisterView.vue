@@ -20,12 +20,18 @@
         <el-form-item label="确认密码" prop="confirmPassword">
           <el-input
             v-model="registerForm.confirmPassword"
+            type="password"
             placeholder="请再次输入密码"
             show-password
-            type="password"
           />
         </el-form-item>
-        <el-button class="submit-btn" type="primary" @click="handleRegister"> 注册 </el-button>
+        <el-form-item label="验证码" prop="captcha">
+          <div class="captcha-container">
+            <el-input v-model="registerForm.captcha" placeholder="请输入验证码" />
+            <img :src="captchaUrl" alt="验证码" class="captcha-img" @click="refreshCaptcha" />
+          </div>
+        </el-form-item>
+        <el-button class="submit-btn" type="primary" @click="handleRegister">注册</el-button>
       </el-form>
       <div class="form-footer">
         <span>已有账号？</span>
@@ -36,9 +42,10 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import AuthLayout from '@/components/AuthLayout.vue'
+import axios from 'axios'
 
 const router = useRouter()
 const registerFormRef = ref()
@@ -47,6 +54,7 @@ const registerForm = ref({
   email: '',
   password: '',
   confirmPassword: '',
+  captcha: '',
 })
 
 const validatePass = (rule, value, callback) => {
@@ -73,7 +81,36 @@ const rules = {
     { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' },
   ],
   confirmPassword: [{ required: true, trigger: 'blur', validator: validatePass }],
+  captcha: [{ required: true, message: '请输入验证码', trigger: 'blur' }],
 }
+
+// 刷新验证码
+const captchaUrl = ref('')
+
+const getCaptcha = async () => {
+  try {
+    const response = await axios.get('/api/captcha', {
+      responseType: 'blob',
+    })
+    captchaUrl.value = URL.createObjectURL(response.data)
+  } catch (error) {
+    console.error('获取验证码失败:', error)
+  }
+}
+
+const refreshCaptcha = () => {
+  getCaptcha()
+}
+
+onMounted(() => {
+  getCaptcha()
+})
+
+onUnmounted(() => {
+  if (captchaUrl.value) {
+    URL.revokeObjectURL(captchaUrl.value)
+  }
+})
 
 const handleRegister = () => {
   registerFormRef.value?.validate((valid) => {
@@ -115,5 +152,16 @@ h2 {
 .form-footer a {
   color: var(--el-color-primary);
   margin-left: 0.5rem;
+}
+
+.captcha-container {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.captcha-img {
+  height: 32px;
+  cursor: pointer;
 }
 </style>
